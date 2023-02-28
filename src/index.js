@@ -74,8 +74,3 @@ function createList(countries) {
     )
     .join('');
 }
-
-const countryEl = document.querySelectorAll('.country-list__element');
-countryEl.addEventListener('click', c => {
-  console.log('Country was clicked');
-});
