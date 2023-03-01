@@ -13,11 +13,12 @@ const clearItem = item => (item.innerHTML = '');
 
 input.addEventListener('input', debounce(findCountries, DEBOUNCE_DELAY));
 
-function findCountries() {
-  const value = input.value.trim();
+function findCountries(e) {
+  clearItem(listEl);
+  clearItem(infoEl);
+  const value = e.target.value.trim();
+
   if (!value) {
-    clearItem(listEl);
-    clearItem(infoEl);
     return;
   }
 
@@ -25,7 +26,6 @@ function findCountries() {
     .then(countries => {
       console.log(countries);
       if (countries.length > 10) {
-        clearItem(listEl);
         Notify.info(
           'Too many matches found. Please enter a more specific name.'
         );
@@ -35,19 +35,14 @@ function findCountries() {
     })
     .catch(err => {
       Notify.failure('Oops, there is no country with that name');
-      return;
     });
 }
 
 function markupRender(countries) {
   if (countries.length === 1) {
-    clearItem(listEl);
-    clearItem(infoEl);
     const item = createItem(countries);
     infoEl.insertAdjacentHTML('beforeend', item);
   } else {
-    clearItem(listEl);
-    clearItem(infoEl);
     const list = createList(countries);
     listEl.insertAdjacentHTML('beforeend', list);
   }
